@@ -1,0 +1,40 @@
+{
+  "name": "cldr-segmentation",
+  "version": "1.0.0",
+  "description": "CLDR text segmentation for JavaScript",
+  "main": "dist/cldr-segmentation.js",
+  "scripts": {
+    "test": "jasmine-node spec/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/camertron/cldr-segmentation.js.git"
+  },
+  "keywords": [
+    "CLDR",
+    "segmentation",
+    "text",
+    "word",
+    "break",
+    "sentence"
+  ],
+  "author": "Cameron C. Dutro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/camertron/cldr-segmentation.js/issues"
+  },
+  "homepage": "https://github.com/camertron/cldr-segmentation.js#readme",
+  "devDependencies": {
+    "load-grunt-tasks": "~3.5",
+    "grunt": "~1.0",
+    "grunt-babel": "~7.0",
+    "grunt-contrib-concat": "~1.0",
+    "grunt-contrib-uglify": "~3.1",
+    "babel-core": "~6.26",
+    "babel-preset-es2015": "~6.0",
+    "babel-plugin-transform-es2015-modules-umd": "~6.0",
+    "babel-plugin-rename-umd-globals": "~1.0",
+    "babel-plugin-add-module-exports": "~0.2",
+    "cldrSegmentation": "./"
+  }
+}
