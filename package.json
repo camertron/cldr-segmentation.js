@@ -23,7 +23,7 @@
   "bugs": {
     "url": "https://github.com/camertron/cldr-segmentation.js/issues"
   },
-  "homepage": "https://github.com/camertron/cldr-segmentation.js#readme",
+  "homepage": "https://github.com/camertron/cldr-segmentation.js",
   "devDependencies": {
     "load-grunt-tasks": "~3.5",
     "grunt": "~1.0",
