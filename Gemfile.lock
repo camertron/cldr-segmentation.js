@@ -1,0 +1,33 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    byebug (9.1.0)
+    camertron-eprun (1.1.1)
+    cldr-plurals-runtime-rb (1.0.1)
+    coderay (1.1.2)
+    method_source (0.9.0)
+    pry (0.11.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
+    pry-byebug (3.5.0)
+      byebug (~> 9.1)
+      pry (~> 0.10)
+    rake (12.3.0)
+    thread_safe (0.3.6)
+    twitter_cldr (4.4.2)
+      camertron-eprun
+      cldr-plurals-runtime-rb (~> 1.0)
+      tzinfo
+    tzinfo (1.2.4)
+      thread_safe (~> 0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  pry-byebug
+  rake
+  twitter_cldr (~> 4.0)
+
+BUNDLED WITH
+   1.16.0

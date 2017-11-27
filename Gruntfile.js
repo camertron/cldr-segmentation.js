@@ -52,6 +52,7 @@ module.exports = (grunt) => {
       },
       dist: {
         src: [
+          'src/deps/*.js',
           'src/uliExceptions.js',
           'src/breakIterator.js',
           'src/cursor.js',
@@ -62,6 +63,14 @@ module.exports = (grunt) => {
         ],
         dest: 'build/cldr-segmentation.js',
       },
+
+      deps: {
+        src: [
+          'node_modules/utfstring/utfstring.js',
+          'dist/cldr-segmentation.js'
+        ],
+        dest: 'dist/cldr-segmentation.js'
+      }
     },
 
     babel: {
@@ -72,6 +81,10 @@ module.exports = (grunt) => {
           'transform-es2015-modules-umd',
           ['rename-umd-globals', umdGlobalRenames],
         ]
+      },
+
+      globals: {
+        UtfString: 'utfstring'
       },
 
       main: {
@@ -103,5 +116,5 @@ module.exports = (grunt) => {
     }
   });
 
-  grunt.registerTask('default', ['concat', 'babel', 'uglify']);
+  grunt.registerTask('default', ['concat:dist', 'babel', 'concat:deps', 'uglify']);
 };

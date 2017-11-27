@@ -1,4 +1,4 @@
-export const sentenceBreakRuleSet = [
+const sentenceBreakRuleSet = [
   new Rule(
     /(?:\u{000d})/u,
     /(?:\u{000a})/u,

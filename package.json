@@ -24,6 +24,9 @@
     "url": "https://github.com/camertron/cldr-segmentation.js/issues"
   },
   "homepage": "https://github.com/camertron/cldr-segmentation.js",
+  "dependencies": {
+    "utfstring": "/Users/cameron/workspace/utfstring"
+  },
   "devDependencies": {
     "load-grunt-tasks": "~3.5",
     "grunt": "~1.0",
@@ -35,6 +38,7 @@
     "babel-plugin-transform-es2015-modules-umd": "~6.0",
     "babel-plugin-rename-umd-globals": "~1.0",
     "babel-plugin-add-module-exports": "~0.2",
-    "cldrSegmentation": "./"
+    "cldrSegmentation": "./",
+    "jasmine-node": "~1.14"
   }
 }

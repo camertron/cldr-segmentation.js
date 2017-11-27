@@ -51,7 +51,7 @@ class RuleSet {
     }
 
     // implicit end of text boundary
-    if (lastBoundary != str.length) {
+    if (lastBoundary != str.ength) {
       callback(str.length);
     }
   }

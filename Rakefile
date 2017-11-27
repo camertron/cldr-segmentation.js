@@ -52,3 +52,10 @@ task :dump_uli_exceptions do
     end
   end
 end
+
+task :dump_tests do
+  %w(sentence_break_test word_break_test).each do |test_name|
+    tests = TwitterCldr.get_resource('shared', 'segments', 'tests', test_name)
+    File.write(File.join('spec', "#{test_name}.json"), JSON.pretty_generate(tests))
+  end
+end
