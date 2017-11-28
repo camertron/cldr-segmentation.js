@@ -1,4 +1,4 @@
-const wordBreakRuleSet = [
+export const wordBreakRuleSet = [
   new Rule(
     /(?:\u{000d})/u,
     /(?:\u{000a})/u,

@@ -8,6 +8,8 @@ task :dump_rule_sets do
   def javascriptify(regex_str)
     if regex_str.empty?
       "new RegExp('', 'u')"
+    elsif regex_str == '.'
+      '[^]'  # also matches newlines
     else
       "/#{regex_str}/u"
     end
@@ -16,7 +18,7 @@ task :dump_rule_sets do
   BOUNDARY_TYPES.each do |boundary_type|
     rule_set = TwitterCldr::Segmentation::RuleSet.load(:en, boundary_type)
 
-    File.open("./src/rule_sets/#{boundary_type}.js", 'w+') do |file|
+    File.open("./src/ruleSets/#{boundary_type}.js", 'w+') do |file|
       file << "export const #{boundary_type}BreakRuleSet = [\n"
 
       rule_set.rules.each_with_index do |rule, index|
@@ -54,8 +56,15 @@ task :dump_uli_exceptions do
 end
 
 task :dump_tests do
+  def camelize(str)
+    str.gsub(/_(\w)/) { $1.upcase }
+  end
+
   %w(sentence_break_test word_break_test).each do |test_name|
     tests = TwitterCldr.get_resource('shared', 'segments', 'tests', test_name)
-    File.write(File.join('spec', "#{test_name}.json"), JSON.pretty_generate(tests))
+    File.write(
+      File.join('spec', 'conformance', "#{camelize(test_name.chomp('_test'))}.json"),
+      JSON.pretty_generate(tests)
+    )
   end
 end

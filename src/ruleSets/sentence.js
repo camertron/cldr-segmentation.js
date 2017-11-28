@@ -1,4 +1,4 @@
-const sentenceBreakRuleSet = [
+export const sentenceBreakRuleSet = [
   new Rule(
     /(?:\u{000d})/u,
     /(?:\u{000a})/u,
@@ -51,7 +51,7 @@ const sentenceBreakRuleSet = [
   ),
   new Rule(
     new RegExp('', 'u'),
-    /./u,
+    [^],
     {isBreak: false, id: '12'}
   )
 ];
