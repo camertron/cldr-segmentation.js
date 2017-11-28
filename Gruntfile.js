@@ -52,7 +52,6 @@ module.exports = (grunt) => {
       },
       dist: {
         src: [
-          'src/deps/*.js',
           'src/uliExceptions.js',
           'src/breakIterator.js',
           'src/cursor.js',

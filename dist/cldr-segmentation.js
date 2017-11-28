@@ -317,31 +317,22 @@
 })();
 ;(function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define('cldr/segmentation', ['exports', 'utfstring'], factory);
+    define('cldr/segmentation', ['exports'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('utfstring'));
+    factory(exports);
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.utfstring);
+    factory(mod.exports);
     global.cldrSegmentation = mod.exports;
   }
-})(this, function (exports, _utfstring) {
+})(this, function (exports) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.BreakIterator = exports.uliExceptions = undefined;
-
-  var _utfstring2 = _interopRequireDefault(_utfstring);
-
-  function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-      default: obj
-    };
-  }
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -367,7 +358,7 @@
     };
   }();
 
-  ;var uliExceptions = exports.uliExceptions = {};
+  var uliExceptions = exports.uliExceptions = {};
   ;
   var BreakIterator = exports.BreakIterator = function () {
     function BreakIterator(locale) {
@@ -463,17 +454,12 @@
     }, {
       key: 'isEof',
       value: function isEof() {
-        return this.position >= this.utfLength() - 1;
+        return this.position >= this.text.length;
       }
     }, {
       key: 'isEos',
       value: function isEos() {
         return this.position >= this.text.length - 1;
-      }
-    }, {
-      key: 'utfLength',
-      value: function utfLength() {
-        return _utfstring2.default.length(this.text);
       }
     }]);
 
@@ -571,9 +557,9 @@
       this.rules = rules;
       this.boundaryType = boundaryType;
 
-      this.implicitEndOfTextRule = new Rule(/.$/, new RegExp(''), { isBreak: true, id: 9998 });
+      this.implicitEndOfTextRule = new Rule(/(?:[\0-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])$/, new RegExp('', 'u'), { isBreak: true, id: 9998 });
 
-      this.implicitFinalRule = new Rule(/./, /./, { isBreak: true, id: 9999 });
+      this.implicitFinalRule = new Rule(/(?:[\0-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])/, /(?:[\0-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])|$/, { isBreak: true, id: 9999 });
 
       if (uliExceptions.length > 0) {
         var regexContents = [];
@@ -582,7 +568,7 @@
           regexContents.push(_this.escapeRegex(exc));
         });
 
-        this.exceptionRule = new Rule(new RegExp('(?:' + regexContents.join('|') + ')'), new RegExp(''), { isBreak: false, id: 0 });
+        this.exceptionRule = new Rule(new RegExp('(?:' + regexContents.join('|') + ')', 'u'), new RegExp('', 'u'), { isBreak: false, id: 0 });
       }
     }
 
@@ -605,14 +591,14 @@
           }
 
           if (match.boundaryPosition == cursor.position) {
-            cursor.advance();
+            cursor.advance(match.boundaryOffset[1] - match.boundaryOffset[0]);
           } else {
             cursor.advance(match.boundaryPosition - cursor.position);
           }
         }
 
         // implicit end of text boundary
-        if (lastBoundary != str.ength) {
+        if (lastBoundary != str.length) {
           callback(str.length);
         }
       }

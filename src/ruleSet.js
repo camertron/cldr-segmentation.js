@@ -5,11 +5,11 @@ class RuleSet {
     this.boundaryType = boundaryType;
 
     this.implicitEndOfTextRule = new Rule(
-      /.$/, new RegExp(''), {isBreak: true, id: 9998}
+      /[^]$/u, new RegExp('', 'u'), {isBreak: true, id: 9998}
     );
 
     this.implicitFinalRule = new Rule(
-      /./, /./, {isBreak: true, id: 9999}
+      /[^]/u, /[^]|$/u, {isBreak: true, id: 9999}
     );
 
     if (uliExceptions.length > 0) {
@@ -20,8 +20,8 @@ class RuleSet {
       });
 
       this.exceptionRule = new Rule(
-        new RegExp('(?:' + regexContents.join('|') + ')'),
-        new RegExp(''),
+        new RegExp('(?:' + regexContents.join('|') + ')', 'u'),
+        new RegExp('', 'u'),
         {isBreak: false, id: 0}
       );
     }
@@ -44,14 +44,15 @@ class RuleSet {
       }
 
       if (match.boundaryPosition == cursor.position) {
-        cursor.advance();
+        // can't just advance by 1 here like in the Ruby version because of multi-byte characters
+        cursor.advance(match.boundaryOffset[1] - match.boundaryOffset[0]);
       } else {
         cursor.advance(match.boundaryPosition - cursor.position);
       }
     }
 
     // implicit end of text boundary
-    if (lastBoundary != str.ength) {
+    if (lastBoundary != str.length) {
       callback(str.length);
     }
   }

@@ -14,16 +14,10 @@ class Cursor {
   }
 
   isEof() {
-    return this.position >= this.utfLength() - 1;
+    return this.position >= this.text.length;
   }
 
   isEos() {
     return this.position >= this.text.length - 1;
-  }
-
-  // private
-
-  utfLength() {
-    return UtfString.length(this.text);
   }
 }
