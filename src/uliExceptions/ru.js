@@ -1,4 +1,4 @@
-export default [
+exports.uliExceptions['ru'] = [
   'кв.',
   'отд.',
   'проф.',

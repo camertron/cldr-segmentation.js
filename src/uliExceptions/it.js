@@ -1,4 +1,4 @@
-export default [
+exports.uliExceptions['it'] = [
   'C.P.',
   'Cfr.',
   'D.',

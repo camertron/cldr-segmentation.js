@@ -47,7 +47,7 @@ task :dump_uli_exceptions do
 
     unless exceptions.empty?
       File.open("./src/uliExceptions/#{locale}.js", 'w+') do |file|
-        file << "export default [\n"
+        file << "exports.uliExceptions['#{locale}'] = [\n"
         file << exceptions.map { |exc| "  '#{exc}'" }.join(",\n")
         file << "\n]\n"
       end

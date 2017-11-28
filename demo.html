@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <script src='./dist/cldr-segmentation.js'></script>
+  </head>
+  <body>
+    <script type='text/javascript'>
+      var breakIter = new cldrSegmentation.BreakIterator('en', cldrSegmentation.uliExceptions.en);
+
+      var sentence = "I like Mrs. Murphy, she's nice.";
+
+      breakIter.eachSentence(sentence, function(word, start, stop) {
+        console.log('"' + word + "\": " + start + ", " + stop);
+      });
+    </script>
+  </body>
+</html>
