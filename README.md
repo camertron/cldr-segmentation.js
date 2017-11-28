@@ -21,7 +21,7 @@ In addition, other languages use different segmentation rules than English. For 
 
 ## Examples
 
-Cldr-segmentation is published as a UMD module meaning it should work in both node via `require` and the browser via a `<script>` tag. In the browser, use the `window.cldrSegmentation` to access the library's functionality.
+Cldr-segmentation is published as a UMD module meaning it should work in both node via `require` and the browser via a `<script>` tag. In the browser, use `window.cldrSegmentation` to access the library's functionality.
 
 ### Sentence Segmentation
 
