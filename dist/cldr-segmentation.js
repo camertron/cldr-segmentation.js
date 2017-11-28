@@ -165,17 +165,15 @@
         }
 
         var leftMatchOffset = this.offset(leftMatch, cursor.position);
-
-        var rightMatch = this.matchSide(this.right, cursor.text, leftMatchOffset[leftMatchOffset.length - 1]);
+        var rightMatch = this.matchSide(this.right, cursor.text, leftMatchOffset[1]);
 
         if (rightMatch == undefined) {
           return null;
         }
 
-        var rightMatchOffset = this.offset(rightMatch, leftMatchOffset[leftMatchOffset.length - 1]);
-
-        var offset = [leftMatchOffset[0], rightMatchOffset[rightMatchOffset.length - 1]];
-        var position = leftMatchOffset[leftMatchOffset.length - 1];
+        var rightMatchOffset = this.offset(rightMatch, leftMatchOffset[1]);
+        var offset = [leftMatchOffset[0], rightMatchOffset[1]];
+        var position = leftMatchOffset[1];
 
         return new RuleMatch(this, offset, position);
       }

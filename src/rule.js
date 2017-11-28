@@ -14,19 +14,15 @@ class Rule {
     }
 
     let leftMatchOffset = this.offset(leftMatch, cursor.position);
-
-    let rightMatch = this.matchSide(this.right, cursor.text, leftMatchOffset[leftMatchOffset.length - 1]);
+    let rightMatch = this.matchSide(this.right, cursor.text, leftMatchOffset[1]);
 
     if (rightMatch == undefined) {
       return null;
     }
 
-    let rightMatchOffset = this.offset(
-      rightMatch, leftMatchOffset[leftMatchOffset.length - 1]
-    );
-
-    let offset = [leftMatchOffset[0], rightMatchOffset[rightMatchOffset.length - 1]];
-    let position = leftMatchOffset[leftMatchOffset.length - 1];
+    let rightMatchOffset = this.offset(rightMatch, leftMatchOffset[1]);
+    let offset = [leftMatchOffset[0], rightMatchOffset[1]];
+    let position = leftMatchOffset[1];
 
     return new RuleMatch(this, offset, position);
   }

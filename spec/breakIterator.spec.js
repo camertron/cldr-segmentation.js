@@ -7,7 +7,7 @@
   }
 
   let cldrSegmentation = require('cldr-segmentation');
-  let englishUliExceptions = require('cldr-segmentation-uli-en');
+  let englishUliExceptions = cldrSegmentation.uliExceptions.en;
 
   let BreakIterator = cldrSegmentation.BreakIterator;
 
