@@ -63,7 +63,7 @@
   };
 
   describe('word boundaries', () => {
-    let iterator = new cldrSegmentation.BreakIterator('en');
+    let iterator = new cldrSegmentation.BreakIterator();
     let ruleSet = iterator.ruleSetFor('word');
 
     // These cases don't work because they end in single quotes (0027).
@@ -94,7 +94,7 @@
   });
 
   describe('sentence boundaries', () => {
-    let iterator = new cldrSegmentation.BreakIterator('en');
+    let iterator = new cldrSegmentation.BreakIterator();
     let ruleSet = iterator.ruleSetFor('sentence');
     let testData = JSON.parse(fs.readFileSync('spec/conformance/sentenceBreak.json'));
 

@@ -1,6 +1,5 @@
 export class BreakIterator {
-  constructor(locale, uliExceptions = []) {
-    this.locale = locale;
+  constructor(uliExceptions = []) {
     this.uliExceptions = uliExceptions;
   }
 
@@ -37,10 +36,7 @@ export class BreakIterator {
   }
 
   ruleSetFor(boundaryType) {
-    return new RuleSet(
-      this.locale, this.rulesFor(boundaryType),
-      boundaryType, this.uliExceptions
-    );
+    return new RuleSet(this.rulesFor(boundaryType), boundaryType, this.uliExceptions);
   }
 
   rulesFor(boundaryType) {

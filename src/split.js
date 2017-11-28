@@ -9,9 +9,9 @@ let split = (breakIter, funcName, str) => {
 };
 
 export const wordSplit = (str, uliExceptions = []) => {
-  return split(new BreakIterator(str, uliExceptions), 'eachWord', str);
+  return split(new BreakIterator(uliExceptions), 'eachWord', str);
 };
 
 export const sentenceSplit = (str, uliExceptions = []) => {
-  return split(new BreakIterator(str, uliExceptions), 'eachSentence', str);
+  return split(new BreakIterator(uliExceptions), 'eachSentence', str);
 };

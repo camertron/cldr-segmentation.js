@@ -42,12 +42,11 @@
   }();
 
   var BreakIterator = exports.BreakIterator = function () {
-    function BreakIterator(locale) {
-      var uliExceptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+    function BreakIterator() {
+      var uliExceptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
       _classCallCheck(this, BreakIterator);
 
-      this.locale = locale;
       this.uliExceptions = uliExceptions;
     }
 
@@ -91,7 +90,7 @@
     }, {
       key: 'ruleSetFor',
       value: function ruleSetFor(boundaryType) {
-        return new RuleSet(this.locale, this.rulesFor(boundaryType), boundaryType, this.uliExceptions);
+        return new RuleSet(this.rulesFor(boundaryType), boundaryType, this.uliExceptions);
       }
     }, {
       key: 'rulesFor',
@@ -220,14 +219,13 @@
 
   ;
   var RuleSet = function () {
-    function RuleSet(locale, rules, boundaryType) {
+    function RuleSet(rules, boundaryType) {
       var _this = this;
 
-      var uliExceptions = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+      var uliExceptions = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
 
       _classCallCheck(this, RuleSet);
 
-      this.locale = locale;
       this.rules = rules;
       this.boundaryType = boundaryType;
 
@@ -361,13 +359,13 @@
   var wordSplit = exports.wordSplit = function wordSplit(str) {
     var uliExceptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
 
-    return split(new BreakIterator(str, uliExceptions), 'eachWord', str);
+    return split(new BreakIterator(uliExceptions), 'eachWord', str);
   };
 
   var sentenceSplit = exports.sentenceSplit = function sentenceSplit(str) {
     var uliExceptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
 
-    return split(new BreakIterator(str, uliExceptions), 'eachSentence', str);
+    return split(new BreakIterator(uliExceptions), 'eachSentence', str);
   };
   ;var uliExceptions = exports.uliExceptions = {};
   ;exports.uliExceptions['de'] = ['A.', 'A.M.', 'Abs.', 'Abt.', 'Abw.', 'Adj.', 'Adr.', 'Akt.', 'Allg.', 'Alt.', 'App.', 'Apr.', 'Art.', 'Aug.', 'Ausg.', 'Ausschl.', 'B.', 'Bed.', 'Ben.', 'Ber.', 'Best.', 'Bibl.', 'C.', 'Ca.', 'Chin.', 'Chr.', 'Co.', 'D.', 'D. h.', 'Dat.', 'Dez.', 'Dim.', 'Dipl.-Ing.', 'Dipl.-Kfm.', 'Dir.', 'Dr.', 'Dtzd.', 'Einh.', 'Erf.', 'Evtl.', 'F.', 'F.f.', 'Fa.', 'Fam.', 'Fn.', 'Folg.', 'Forts. f.', 'Fr.', 'Frl.', 'G.', 'Gebr.', 'Gem.', 'Geograph.', 'Ges.', 'Gesch.', 'Ggf.', 'Hbf.', 'Hptst.', 'Hr./Hrn.', 'Hrsg.', 'I.', 'Inc.', 'Ing.', 'Inh.', 'Int.', 'J.', 'J.D.', 'Jahrh.', 'Jan.', 'Jr.', 'Kap.', 'Kfm.', 'Kl.', 'Konv.', 'Kop.', 'L.', 'Ltd.', 'M.', 'Max.', 'Min.', 'Mind.', 'Mio.', 'Mod.', 'Mrd.', 'Msp.', 'N.', 'Nov.', 'Nr.', 'O.', 'Obj.', 'Okt.', 'Op.', 'P.', 'P.M.', 'PIN.', 'Pfd.', 'Phys.', 'Port.', 'Prot.', 'Proz.', 'Qu.', 'R.', 'Rd.', 'Reg.', 'Reg.-Bez.', 'Rel.', 'Rep.', 'S.A.', 'Schr.', 'Sek.', 'Sept.', 'Spezif.', 'St.', 'StR.', 'Std.', 'Str.', 'T.', 'Tel.', 'Temp.', 'Test.', 'Trans.', 'Tägl.', 'U.', 'U. U.', 'U.S.', 'U.S.A.', 'U.U.', 'Urspr.', 'Ursprüngl.', 'Verf.', 'Vgl.', 'W.', 'Wg.', 'Y.', 'Z.', 'Z. B.', 'Z. Zt.', 'Ztr.', 'a.D.', 'a.M.', 'a.Rh.', 'a.a.O.', 'a.a.S.', 'am.', 'amtl.', 'b.', 'beil.', 'd.J.', 'd.Ä.', 'e.V.', 'e.Wz.', 'e.h.', 'ehem.', 'eigtl.', 'einschl.', 'entspr.', 'erw.', 'ev.', 'evtl.', 'exkl.', 'frz.', 'geb.', 'gedr.', 'gek.', 'gesch.', 'gest.', 'ggf./ggfs.', 'hpts.', 'i.A.', 'i.B.', 'i.H.', 'i.J.', 'i.R.', 'i.V.', 'inkl.', 'jew.', 'jhrl.', 'k. u. k.', 'k.u.k.', 'kath.', 'kfm.', 'kgl.', 'led.', 'm.E.', 'm.W.', 'mtl.', 'möbl.', 'n.u.Z.', 'näml.', 'o.A.', 'o.B.', 'o.g.', 'od.', 'p.Adr.', 'r.', 'röm.', 'röm.-kath.', 's.', 's.a.', 'schles.', 'schweiz.', 'schwäb.', 'sog.', 'südd.', 'tägl.', 'u.', 'u.A.w.g.', 'u.U.', 'u.a.', 'u.v.a.', 'u.Ä.', 'u.ä.', 'v. H.', 'v.Chr.', 'v.H.', 'v.R.w.', 'v.T.', 'v.u.Z.', 'verh.', 'verw.', 'vgl.', 'z.', 'z.B.', 'z.Hd.', 'z.Z.', 'zzgl.', 'österr.'];exports.uliExceptions['en'] = ['A.', 'A.D.', 'A.M.', 'A.S.', 'AA.', 'AB.', 'AD.', 'Abs.', 'Act.', 'Adj.', 'Adv.', 'All.', 'Alt.', 'Approx.', 'As.', 'Aug.', 'B.', 'B.V.', 'By.', 'C.F.', 'C.O.D.', 'Cap.', 'Capt.', 'Card.', 'Col.', 'Comm.', 'Conn.', 'Cont.', 'D.', 'D.A.', 'D.C.', 'DC.', 'Dec.', 'Def.', 'Dept.', 'Diff.', 'Do.', 'E.', 'E.G.', 'E.g.', 'Ed.', 'Est.', 'Etc.', 'Ex.', 'Exec.', 'F.', 'Feb.', 'Fn.', 'Fri.', 'G.', 'Gb.', 'Go.', 'Hat.', 'Hon.B.A.', 'Hz.', 'I.', 'I.D.', 'I.T.', 'I.e.', 'Id.', 'In.', 'Is.', 'J.B.', 'J.D.', 'J.K.', 'Jam.', 'Jan.', 'Job.', 'Joe.', 'Jun.', 'K.', 'K.R.', 'Kb.', 'L.', 'L.A.', 'L.P.', 'Lev.', 'Lib.', 'Link.', 'Long.', 'Lt.', 'Lt.Cdr.', 'M.', 'M.I.T.', 'M.R.', 'M.T.', 'MR.', 'Maj.', 'Mar.', 'Mart.', 'Mb.', 'Md.', 'Mgr.', 'Min.', 'Misc.', 'Mr.', 'Mrs.', 'Ms.', 'Mt.', 'N.V.', 'N.Y.', 'Nov.', 'Nr.', 'Num.', 'O.', 'OK.', 'Ok.', 'On.', 'Op.', 'Or.', 'Org.', 'P.M.', 'P.O.', 'P.V.', 'PC.', 'PP.', 'Ph.D.', 'Phys.', 'Pro.', 'Prof.', 'Pvt.', 'Q.', 'R.L.', 'R.T.', 'Rep.', 'Rev.', 'S.', 'S.A.', 'S.A.R.', 'S.E.', 'S.p.A.', 'Sep.', 'Sept.', 'Sgt.', 'Sq.', 'T.', 'To.', 'U.', 'U.S.', 'U.S.A.', 'U.S.C.', 'Up.', 'VS.', 'Var.', 'X.', 'Yr.', 'Z.', 'a.m.', 'exec.', 'pp.', 'vs.'];exports.uliExceptions['es'] = ['A.C.', 'AA.', 'All.', 'Ant.', 'Av.', 'Avda.', 'Bien.', 'C.', 'C.P.', 'C.S.', 'C.V.', 'CA.', 'Col.', 'Comm.', 'Corp.', 'Cía.', 'D.', 'DC.', 'Da.', 'Desc.', 'Desv.', 'Dr.', 'Dra.', 'Drs.', 'Dto.', 'Dª.', 'Dña.', 'Em.', 'Emm.', 'Exc.', 'Excma.', 'Excmas.', 'Excmo.', 'Excmos.', 'Exma.', 'Exmas.', 'Exmo.', 'Exmos.', 'FF.CC.', 'Fabric.', 'Fr.', 'H.P.', 'Id.', 'Ilma.', 'Ilmas.', 'Ilmo.', 'Ilmos.', 'Inc.', 'JJ.OO.', 'K.', 'Kit.', 'Korn.', 'L.', 'Lcda.', 'Lcdo.', 'Lda.', 'Ldo.', 'Lic.', 'Ltd.', 'Ltda.', 'Ltdo.', 'M.', 'MM.', 'Mons.', 'Mr.', 'Mrs.', 'O.M.', 'PP.', 'R.D.', 'R.U.', 'RAM.', 'RR.HH.', 'Rdo.', 'Rdos.', 'Reg.', 'Rev.', 'Rol.', 'Rvdmo.', 'Rvdmos.', 'Rvdo.', 'Rvdos.', 'SA.', 'SS.AA.', 'SS.MM.', 'Sdad.', 'Seg.', 'Sol.', 'Sr.', 'Sra.', 'Sras.', 'Sres.', 'Srta.', 'Srtas.', 'Sta.', 'Sto.', 'Trab.', 'U.S.', 'U.S.A.', 'Var.', 'Vda.', 'afma.', 'afmas.', 'afmo.', 'afmos.', 'bco.', 'bol.', 'c/c.', 'cap.', 'cf.', 'cfr.', 'col.', 'depto.', 'deptos.', 'doc.', 'dpto.', 'dptos.', 'dtor.', 'e.g.', 'ed.', 'ej.', 'fig.', 'figs.', 'fund.', 'hnos.', 'licda.', 'licdo.', 'ms.', 'mss.', 'mtro.', 'ntra.', 'ntro.', 'p.ej.', 'prof.', 'prov.', 'sras.', 'sres.', 'srs.', 'ss.', 'trad.', 'v.gr.', 'vid.', 'vs.'];exports.uliExceptions['fr'] = ['All.', 'C.', 'Comm.', 'D.', 'DC.', 'Desc.', 'Inc.', 'Jr.', 'L.', 'M.', 'MM.', 'Mart.', 'Op.', 'P.', 'P.-D. G.', 'P.O.', 'Prof.', 'S.A.', 'S.M.A.R.T.', 'U.', 'U.S.', 'U.S.A.', 'Var.', 'W.', 'acoust.', 'adr.', 'anc.', 'ann.', 'anon.', 'append.', 'aux.', 'broch.', 'bull.', 'cam.', 'categ.', 'coll.', 'collab.', 'config.', 'dest.', 'dict.', 'dir.', 'doc.', 'encycl.', 'exempl.', 'fig.', 'gouv.', 'graph.', 'hôp.', 'ill.', 'illustr.', 'imm.', 'imprim.', 'indus.', 'niv.', 'quart.', 'réf.', 'symb.', 'synth.', 'syst.', 'trav. publ.', 'voit.', 'éd.', 'édit.', 'équiv.', 'éval.'];exports.uliExceptions['it'] = ['C.P.', 'Cfr.', 'D.', 'DC.', 'Geom.', 'Ing.', 'L.', 'Liv.', 'Ltd.', 'Mod.', 'N.B.', 'N.d.A.', 'N.d.E.', 'N.d.T.', 'O.d.G.', 'S.A.R.', 'S.M.A.R.T.', 'S.p.A.', 'Sig.', 'U.S.', 'U.S.A.', 'a.C.', 'ag.', 'all.', 'arch.', 'avv.', 'c.c.p.', 'd.C.', 'd.p.R.', 'div.', 'dott.', 'dr.', 'fig.', 'int.', 'mitt.', 'on.', 'p.', 'p.i.', 'pag.', 'rag.', 'sez.', 'tab.', 'tav.', 'ver.', 'vol.'];exports.uliExceptions['pt'] = ['A.C.', 'Alm.', 'Av.', 'D.C', 'Dir.', 'Dr.', 'Dra.', 'Dras.', 'Drs.', 'E.', 'Est.', 'Exma.', 'Exmo.', 'Fr.', 'Ilma.', 'Ilmo.', 'Jr.', 'Ltd.', 'Ltda.', 'Mar.', 'N.Sra.', 'N.T.', 'Pe.', 'Ph.D.', 'R.', 'S.', 'S.A.', 'Sta.', 'Sto.', 'V.T.', 'W.C.', 'a.C.', 'a.m. ; A.M', 'abr.', 'abrev.', 'adm.', 'aer.', 'ago.', 'agric.', 'anat.', 'ap.', 'apart.', 'apt.', 'arit.', 'arqueol.', 'arquit.', 'astron.', 'autom.', 'aux.', 'biogr.', 'bras.', 'cap.', 'caps.', 'cat.', 'cel.', 'cf.', 'col.', 'com.', 'comp.', 'compl.', 'cont.', 'contab.', 'créd.', 'cx.', 'círc.', 'cód.', 'd.C.', 'des.', 'desc.', 'dez.', 'dipl.', 'dir.', 'div.', 'doc.', 'déb.', 'ed.', 'educ.', 'elem.', 'eletr.', 'eletrôn.', 'end.', 'eng.', 'esp.', 'ex.', 'f.', 'fac.', 'fasc.', 'fem.', 'fev.', 'ff.', 'fig.', 'fil.', 'filos.', 'fisiol.', 'fl.', 'fot.', 'fr.', 'fís.', 'geom.', 'gram.', 'gên.', 'hist.', 'ind.', 'ingl.', 'jan.', 'jul.', 'jun.', 'jur.', 'l.', 'lat.', 'lin.', 'lit.', 'liter.', 'long.', 'mai.', 'mar.', 'mat.', 'matem.', 'mov.', 'máq.', 'méd.', 'mús.', 'neol.', 'nov.', 'náut.', 'obs.', 'odont.', 'odontol.', 'org.', 'organiz.', 'out.', 'p.', 'p. ex.', 'p.m. ; P.M.', 'pal.', 'pol.', 'port.', 'pp.', 'pq.', 'prod.', 'prof.', 'profa.', 'pron.', 'próx.', 'psicol.', 'pág.', 'quím.', 'r.s.v.p.', 'ref.', 'rel.', 'relat.', 'rementente', 'rep.', 'res.', 'rod.', 'set.', 'sociol.', 'sup.', 'séc.', 'símb.', 'tec.', 'tecnol.', 'tel.', 'trad.', 'transp.', 'univ.', 'vol.', 'vs.', 'álg.', 'índ.'];exports.uliExceptions['ru'] = ['кв.', 'отд.', 'проф.', 'руб.', 'тел.', 'тыс.', 'ул.'];

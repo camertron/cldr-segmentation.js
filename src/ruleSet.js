@@ -1,6 +1,5 @@
 class RuleSet {
-  constructor(locale, rules, boundaryType, uliExceptions = []) {
-    this.locale = locale;
+  constructor(rules, boundaryType, uliExceptions = []) {
     this.rules = rules;
     this.boundaryType = boundaryType;
 

@@ -34,7 +34,7 @@
 
   describe('BreakIterator', () => {
     describe("#eachSentence", () => {
-      let iterator = new BreakIterator('en');
+      let iterator = new BreakIterator();
 
       it('splits a simple string into sentences', () => {
         let str = 'The. Quick. Brown. Fox.';
@@ -71,7 +71,7 @@
       });
 
       describe('with ULI exceptions', () => {
-        let iterator = new BreakIterator('en', englishUliExceptions);
+        let iterator = new BreakIterator(englishUliExceptions);
 
         it('does not split on certain abbreviations like Mr. and Mrs.', () => {
           let str = "I really like Mrs. Patterson. She's nice.";
@@ -97,7 +97,7 @@
     });
 
     describe('#eachWord', () => {
-      let iterator = new BreakIterator('en');
+      let iterator = new BreakIterator();
 
       it('splits a simple string into words', () => {
         let str = 'the quick brown fox';
