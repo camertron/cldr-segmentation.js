@@ -19,6 +19,7 @@ module.exports = (grunt) => {
           'src/ruleMatchData.js',
           'src/ruleSet.js',
           'src/ruleSets/*.js',
+          'src/split.js',
           'src/uliExceptions.js',
           'src/uliExceptions/*.js'
         ],
