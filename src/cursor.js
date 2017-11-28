@@ -13,10 +13,6 @@ class Cursor {
     this.matchCache = {};
   }
 
-  isEof() {
-    return this.position >= this.text.length;
-  }
-
   isEos() {
     return this.position >= this.text.length - 1;
   }

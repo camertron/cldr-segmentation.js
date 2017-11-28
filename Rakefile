@@ -9,7 +9,7 @@ task :dump_rule_sets do
     if regex_str.empty?
       "new RegExp('', 'u')"
     elsif regex_str == '.'
-      '[^]'  # also matches newlines
+      '/[^]/u'  # also matches newlines
     else
       "/#{regex_str}/u"
     end
@@ -18,7 +18,7 @@ task :dump_rule_sets do
   BOUNDARY_TYPES.each do |boundary_type|
     rule_set = TwitterCldr::Segmentation::RuleSet.load(:en, boundary_type)
 
-    File.open("./src/ruleSets/#{boundary_type}.js", 'w+') do |file|
+    File.open("./src/ruleSets/#{boundary_type}Break.js", 'w+') do |file|
       file << "export const #{boundary_type}BreakRuleSet = [\n"
 
       rule_set.rules.each_with_index do |rule, index|

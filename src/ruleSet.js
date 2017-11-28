@@ -34,7 +34,7 @@ class RuleSet {
     // implicit start of text boundary
     callback(0);
 
-    while (!cursor.isEof()) {
+    while (!cursor.isEos()) {
       let match = this.findMatch(cursor);
       let rule = match.rule;
 

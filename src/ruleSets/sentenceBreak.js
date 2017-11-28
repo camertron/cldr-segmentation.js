@@ -51,7 +51,7 @@ export const sentenceBreakRuleSet = [
   ),
   new Rule(
     new RegExp('', 'u'),
-    [^],
+    /[^]/u,
     {isBreak: false, id: '12'}
   )
 ];
