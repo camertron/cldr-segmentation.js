@@ -1,69 +1,89 @@
 require 'json'
 require 'twitter_cldr'
-require 'pry-byebug'
 
-BOUNDARY_TYPES = %w(word sentence)
+BOUNDARY_TYPES = %w(word sentence grapheme line)
+
+module Utils
+  def self.camelize(str)
+    str.gsub(/_(\w)/) { $1.upcase }
+  end
+end
 
 task :dump_rule_sets do
-  def javascriptify(regex_str)
-    if regex_str.empty?
-      "new RegExp('', 'u')"
-    elsif regex_str == '.'
-      '/[^]/u'  # also matches newlines
-    else
-      "/#{regex_str}/u"
-    end
-  end
-
   BOUNDARY_TYPES.each do |boundary_type|
-    rule_set = TwitterCldr::Segmentation::RuleSet.load(:en, boundary_type)
+    state_machine = TwitterCldr::Segmentation::StateMachine.instance(boundary_type, :en)
 
     File.open("./src/ruleSets/#{boundary_type}Break.js", 'w+') do |file|
-      file << "export const #{boundary_type}BreakRuleSet = [\n"
+      file << "RuleSet.#{boundary_type} = {"
+      file << "\n  forwardTable: {"
+      file << "\n    flags: #{state_machine.ftable.flags},"
+      file << "\n    table: [\n"
 
-      rule_set.rules.each_with_index do |rule, index|
-        file <<
-          "  new Rule(\n"\
-          "    #{javascriptify(rule.left.to_regexp_str)},\n"\
-          "    #{javascriptify(rule.right.to_regexp_str)},\n"\
-          "    {isBreak: #{rule.break?}, id: '#{rule.id}'}\n"\
-          "  )"
-        file << "," if index < rule_set.rules.size - 1
-        file << "\n"
+      rows = state_machine.ftable.values.each_slice(20).map do |values|
+        "      #{values.join(', ')}"
       end
 
-      file << "];\n"
+      file << rows.join(",\n")
+      file << "\n    ]\n  },"
+      file << "\n\n  categoryTable: [\n"
+
+      rows = state_machine.category_table.values.each_slice(4).map do |values|
+        "    #{values.map(&:inspect).join(', ')}"
+      end
+
+      file << rows.join(",\n")
+      file << "\n  ],"
+      file << "\n\n  metadata: {\n"
+
+      rows = state_machine.metadata.values.map do |key, val|
+        "    #{Utils.camelize(key.to_s)}: #{val.inspect}"
+      end
+
+      file << rows.join(",\n")
+      file << "\n  }"
+      file << "\n};\n"
     end
   end
 end
 
-task :dump_uli_exceptions do
+task :dump_suppressions do
+  def trie2arr(node, prefix)
+    node.each_key_and_child.flat_map do |key, child|
+      if child.value
+        prefix + [key].pack('U*')
+      else
+        trie2arr(child, prefix + [key].pack('U*'))
+      end
+    end
+  end
+
   TwitterCldr.supported_locales.each do |locale|
-    # last parameter not important for now, see:
-    # https://github.com/twitter/twitter-cldr-rb/blob/31dfda36ad404dceb0858d73f39af04fa02f012d/lib/twitter_cldr/segmentation/rule_set_builder.rb#L49
-    exceptions = TwitterCldr::Segmentation::RuleSetBuilder.send(
-      :exceptions_for, locale, nil
+    suppressions = TwitterCldr::Segmentation::Suppressions.instance(
+      'sentence', locale
     )
 
-    unless exceptions.empty?
-      File.open("./src/uliExceptions/#{locale}.js", 'w+') do |file|
-        file << "exports.uliExceptions['#{locale}'] = [\n"
-        file << exceptions.map { |exc| "  '#{exc}'" }.join(",\n")
-        file << "\n]\n"
+    unless suppressions.is_a?(TwitterCldr::Segmentation::NullSuppressions)
+      File.open("./src/suppressions/#{locale}.js", 'w+') do |file|
+        file << "Suppressions['#{locale}'] = Suppressions.create([\n"
+
+        rows = trie2arr(suppressions.forward_trie.root, '').map do |item|
+          "  '#{item}'"
+        end
+
+        file << rows.join(",\n")
+        file << "\n]);\n"
       end
     end
   end
 end
 
 task :dump_tests do
-  def camelize(str)
-    str.gsub(/_(\w)/) { $1.upcase }
-  end
-
-  %w(sentence_break_test word_break_test).each do |test_name|
+  BOUNDARY_TYPES.each do |boundary_type|
+    test_name = "#{boundary_type}_break_test"
     tests = TwitterCldr.get_resource('shared', 'segments', 'tests', test_name)
+
     File.write(
-      File.join('spec', 'conformance', "#{camelize(test_name.chomp('_test'))}.json"),
+      File.join('spec', 'conformance', "#{Utils.camelize(test_name.chomp('_test'))}.json"),
       JSON.pretty_generate(tests)
     )
   end

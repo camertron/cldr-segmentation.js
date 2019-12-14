@@ -8,10 +8,18 @@ let split = (breakIter, funcName, str) => {
   return result;
 };
 
-export const wordSplit = (str, uliExceptions = []) => {
-  return split(new BreakIterator(uliExceptions), 'eachWord', str);
+export const wordSplit = (str, suppressions) => {
+  return split(new BreakIterator(suppressions), 'eachWord', str);
 };
 
-export const sentenceSplit = (str, uliExceptions = []) => {
-  return split(new BreakIterator(uliExceptions), 'eachSentence', str);
+export const sentenceSplit = (str, suppressions) => {
+  return split(new BreakIterator(suppressions), 'eachSentence', str);
+};
+
+export const graphemeSplit = (str, suppressions) => {
+  return split(new BreakIterator(suppressions), 'eachGraphemeCluster', str);
+};
+
+export const lineSplit = (str, suppressions) => {
+  return split(new BreakIterator(suppressions), 'eachLine', str);
 };

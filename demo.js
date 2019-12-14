@@ -3,8 +3,8 @@ var breakIter = new cldrSegmentation.BreakIterator('en');
 var str = "I like Mrs. Murphy, she's nice.";
 var results = [];
 
-breakIter.eachWord(str, function(word, start, stop) {
-  results.push([word, start, stop]);
+breakIter.eachSentence(str, function(str, start, stop) {
+  results.push([str, start, stop]);
 });
 
 console.log(results);

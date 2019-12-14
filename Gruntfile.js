@@ -14,14 +14,18 @@ module.exports = (grunt) => {
       dist: {
         src: [
           'src/breakIterator.js',
+          'src/categoryTable.js',
           'src/cursor.js',
-          'src/rule.js',
-          'src/ruleMatchData.js',
+          'src/metadata.js',
+          'src/nullSuppressions.js',
           'src/ruleSet.js',
           'src/ruleSets/*.js',
           'src/split.js',
-          'src/uliExceptions.js',
-          'src/uliExceptions/*.js'
+          'src/stateMachine.js',
+          'src/stateTable.js',
+          'src/trie.js',
+          'src/suppressions.js',
+          'src/suppressions/*.js'
         ],
         dest: 'build/cldr-segmentation.js',
       }
@@ -32,11 +36,12 @@ module.exports = (grunt) => {
         presets: ['es2015'],
         plugins: [
           'transform-es2015-modules-umd',
+          'transform-class-properties'
         ]
       },
 
       globals: {
-        UtfString: 'utfstring'
+        UtfString: 'UtfString'
       },
 
       main: {

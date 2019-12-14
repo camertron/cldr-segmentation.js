@@ -7,7 +7,7 @@
   }
 
   let cldrSegmentation = require('cldr-segmentation');
-  let englishUliExceptions = cldrSegmentation.uliExceptions.en;
+  let englishSuppressions = cldrSegmentation.Suppressions.en;
 
   let BreakIterator = cldrSegmentation.BreakIterator;
 
@@ -70,8 +70,8 @@
         ]);
       });
 
-      describe('with ULI exceptions', () => {
-        let iterator = new BreakIterator(englishUliExceptions);
+      describe('with English suppressions', () => {
+        let iterator = new BreakIterator(englishSuppressions);
 
         it('does not split on certain abbreviations like Mr. and Mrs.', () => {
           let str = "I really like Mrs. Patterson. She's nice.";

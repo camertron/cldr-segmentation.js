@@ -1,15 +1,16 @@
 <html>
   <head>
+    <script src='./node_modules/utfstring/utfstring.js'></script>
     <script src='./dist/cldr-segmentation.js'></script>
   </head>
   <body>
     <script type='text/javascript'>
-      var breakIter = new cldrSegmentation.BreakIterator('en', cldrSegmentation.uliExceptions.en);
+      var breakIter = new cldrSegmentation.BreakIterator(cldrSegmentation.Suppressions.en);
 
-      var sentence = "I like Mrs. Murphy, she's nice.";
+      var sentence = "\u0001\u{1F1E6}";
 
-      breakIter.eachSentence(sentence, function(word, start, stop) {
-        console.log('"' + word + "\": " + start + ", " + stop);
+      breakIter.eachWord(sentence, function(str, start, stop) {
+        console.log([str, start, stop]);
       });
     </script>
   </body>
