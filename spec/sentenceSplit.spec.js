@@ -7,7 +7,7 @@
   }
 
   let cldrSegmentation = require('cldr-segmentation');
-  let englishUliExceptions = cldrSegmentation.uliExceptions.en;
+  let englishSuppressions = cldrSegmentation.suppressions.en;
 
   describe('#sentenceSplit', () => {
     it('splits correctly', () => {
@@ -19,7 +19,7 @@
 
     it('splits correctly using uli exceptions', () => {
       let str = "I like Mrs. Murphy. She's nice.";
-      let result = cldrSegmentation.sentenceSplit(str, englishUliExceptions);
+      let result = cldrSegmentation.sentenceSplit(str, englishSuppressions);
 
       expect(result).toEqual(["I like Mrs. Murphy. ", "She's nice."]);
     });

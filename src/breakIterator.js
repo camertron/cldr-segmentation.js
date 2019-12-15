@@ -1,6 +1,8 @@
+var utfstring = require('UtfString');
+
 export class BreakIterator {
-  constructor(uliExceptions = []) {
-    this.uliExceptions = uliExceptions;
+  constructor(suppressions) {
+    this.suppressions = suppressions;
   }
 
   eachSentence(str, callback) {
@@ -10,6 +12,16 @@ export class BreakIterator {
 
   eachWord(str, callback) {
     let ruleSet = this.ruleSetFor('word');
+    this.eachBoundary(ruleSet, str, callback);
+  }
+
+  eachGraphemeCluster(str, callback) {
+    let ruleSet = this.ruleSetFor('grapheme');
+    this.eachBoundary(ruleSet, str, callback);
+  }
+
+  eachLine(str, callback) {
+    let ruleSet = this.ruleSetFor('line');
     this.eachBoundary(ruleSet, str, callback);
   }
 
@@ -36,17 +48,22 @@ export class BreakIterator {
   }
 
   ruleSetFor(boundaryType) {
-    return new RuleSet(this.rulesFor(boundaryType), boundaryType, this.uliExceptions);
+    let ruleSetCache = this.getRuleSetCache();
+
+    if (ruleSetCache[boundaryType] === undefined) {
+      ruleSetCache[boundaryType] = RuleSet.create(
+        boundaryType, this.suppressions
+      );
+    }
+
+    return ruleSetCache[boundaryType];
   }
 
-  rulesFor(boundaryType) {
-    switch (boundaryType) {
-      case 'sentence':
-        return sentenceBreakRuleSet;
-      case 'word':
-        return wordBreakRuleSet;
-      default:
-        throw new Error("Rule set named '" + boundaryType + "' could not be found.");
+  getRuleSetCache() {
+    if (this.ruleSetCache === undefined) {
+      this.ruleSetCache = {};
     }
+
+    return this.ruleSetCache;
   }
 }

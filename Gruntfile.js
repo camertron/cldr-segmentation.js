@@ -1,4 +1,14 @@
 let fs = require('fs');
+let path = require('path');
+
+let prefix = path.join('src', 'suppressions');
+let suppressions = [];
+
+fs.readdirSync(prefix).forEach( (file) => {
+  if (path.basename(file) !== 'all.js') {
+    suppressions.push(path.join(prefix, file));
+  }
+});
 
 module.exports = (grunt) => {
   require('load-grunt-tasks')(grunt);
@@ -14,14 +24,19 @@ module.exports = (grunt) => {
       dist: {
         src: [
           'src/breakIterator.js',
+          'src/categoryTable.js',
           'src/cursor.js',
-          'src/rule.js',
-          'src/ruleMatchData.js',
+          'src/metadata.js',
+          'src/nullSuppressions.js',
           'src/ruleSet.js',
           'src/ruleSets/*.js',
           'src/split.js',
-          'src/uliExceptions.js',
-          'src/uliExceptions/*.js'
+          'src/stateMachine.js',
+          'src/stateTable.js',
+          'src/trie.js',
+          'src/suppressions.js',
+          ...suppressions,
+          'src/suppressions/all.js'
         ],
         dest: 'build/cldr-segmentation.js',
       }
@@ -32,11 +47,12 @@ module.exports = (grunt) => {
         presets: ['es2015'],
         plugins: [
           'transform-es2015-modules-umd',
+          'transform-class-properties'
         ]
       },
 
       globals: {
-        UtfString: 'utfstring'
+        UtfString: 'UtfString'
       },
 
       main: {

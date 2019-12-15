@@ -7,7 +7,7 @@
   }
 
   let cldrSegmentation = require('cldr-segmentation');
-  let utfstring = require('utfstring');
+  let utfstring = require('UtfString');
   let fs = require('fs');
 
   let parse = (testData) => {
@@ -65,30 +65,20 @@
   describe('word boundaries', () => {
     let iterator = new cldrSegmentation.BreakIterator();
     let ruleSet = iterator.ruleSetFor('word');
-
-    // These cases don't work because they end in single quotes (0027).
-    // Conformant implementations (eg ICU) seem to allow partial regex
-    // matching, or allow matches to run off the end of the string.
-    // Since there's no such thing as a partial regex match in JavaScript,
-    // we have to ignore these cases. Hopefully they happen infrequently
-    // in practice.
-    let skipCases = ['÷ 05D0 × 0027 ÷', '÷ 05D0 × 0308 × 0027 ÷'];
     let testData = JSON.parse(fs.readFileSync('spec/conformance/wordBreak.json'));
 
     testData.forEach( (test) => {
       it('passes Unicode test case ' + test, () => {
-        if (skipCases.indexOf(test) < 0) {
-          let testParts = parse(test);
-          let testCaseString = makeString(testParts);
-          let testCaseBoundaries = boundaries(testParts, testCaseString);
-          let resultBoundaries = [];
+        let testParts = parse(test);
+        let testCaseString = makeString(testParts);
+        let testCaseBoundaries = boundaries(testParts, testCaseString);
+        let resultBoundaries = [];
 
-          ruleSet.eachBoundary(testCaseString, (boundary) => {
-            resultBoundaries.push(boundary);
-          });
+        ruleSet.eachBoundary(testCaseString, (boundary) => {
+          resultBoundaries.push(boundary);
+        });
 
-          expect(resultBoundaries).toEqual(testCaseBoundaries, test);
-        }
+        expect(resultBoundaries).toEqual(testCaseBoundaries, test);
       });
     });
   });
@@ -110,6 +100,78 @@
         });
 
         expect(resultBoundaries).toEqual(testCaseBoundaries);
+      });
+    });
+  });
+
+  describe('grapheme cluster boundaries', () => {
+    let iterator = new cldrSegmentation.BreakIterator();
+    let ruleSet = iterator.ruleSetFor('grapheme');
+    let testData = JSON.parse(fs.readFileSync('spec/conformance/graphemeBreak.json'));
+
+    testData.forEach( (test) => {
+      it('passes Unicode test case ' + test, () => {
+        let testParts = parse(test);
+        let testCaseString = makeString(testParts);
+        let testCaseBoundaries = boundaries(testParts, testCaseString);
+        let resultBoundaries = [];
+
+        ruleSet.eachBoundary(testCaseString, (boundary) => {
+          resultBoundaries.push(boundary);
+        });
+
+        expect(resultBoundaries).toEqual(testCaseBoundaries);
+      });
+    });
+  });
+
+  describe('line boundaries', () => {
+    let iterator = new cldrSegmentation.BreakIterator();
+    let ruleSet = iterator.ruleSetFor('line');
+    let testData = JSON.parse(fs.readFileSync('spec/conformance/lineBreak.json'));
+    let skipCases = [
+      '× 002D ÷ 0023 ÷',
+      '× 002D × 0308 ÷ 0023 ÷',
+      '× 002D ÷ 00A7 ÷',
+      '× 002D × 0308 ÷ 00A7 ÷',
+      '× 002D ÷ 50005 ÷',
+      '× 002D × 0308 ÷ 50005 ÷',
+      '× 002D ÷ 0E01 ÷',
+      '× 002D × 0308 ÷ 0E01 ÷',
+      '× 002C ÷ 0030 ÷',
+      '× 002C × 0308 ÷ 0030 ÷',
+      '× 200B × 0020 ÷ 002C ÷',
+      '× 0065 × 0071 × 0075 × 0061 × 006C × 0073 × 0020 × 002E ÷ 0033 × 0035 × 0020 ÷ 0063 × 0065 × 006E × 0074 × 0073 ÷',
+      '× 0061 × 002E ÷ 0032 × 0020 ÷',
+      '× 0061 × 002E ÷ 0032 × 0020 ÷ 0915 ÷',
+      '× 0061 × 002E ÷ 0032 × 0020 ÷ 672C ÷',
+      '× 0061 × 002E ÷ 0032 × 3000 ÷ 672C ÷',
+      '× 0061 × 002E ÷ 0032 × 3000 ÷ 307E ÷',
+      '× 0061 × 002E ÷ 0032 × 3000 ÷ 0033 ÷',
+      '× 0041 × 002E ÷ 0031 × 0020 ÷ BABB ÷',
+      '× BD24 ÷ C5B4 × 002E × 0020 ÷ 0041 × 002E ÷ 0032 × 0020 ÷ BCFC ÷',
+      '× BD10 ÷ C694 × 002E × 0020 ÷ 0041 × 002E ÷ 0033 × 0020 ÷ BABB ÷',
+      '× C694 × 002E × 0020 ÷ 0041 × 002E ÷ 0034 × 0020 ÷ BABB ÷',
+      '× 0061 × 002E ÷ 0032 × 3000 ÷ 300C ÷',
+      '× 1F1F7 × 1F1FA ÷ 1F1F8 ÷',
+      '× 1F1F7 × 1F1FA ÷ 1F1F8 × 1F1EA ÷',
+      '× 1F1F7 × 1F1FA × 200B ÷ 1F1F8 × 1F1EA ÷'
+    ];
+
+    testData.forEach( (test) => {
+      it('passes Unicode test case ' + test, () => {
+        if (skipCases.indexOf(test) < 0) {
+          let testParts = parse(test);
+          let testCaseString = makeString(testParts);
+          let testCaseBoundaries = boundaries(testParts, testCaseString);
+          let resultBoundaries = [];
+
+          ruleSet.eachBoundary(testCaseString, (boundary) => {
+            resultBoundaries.push(boundary);
+          });
+
+          expect(resultBoundaries).toEqual(testCaseBoundaries);
+        }
       });
     });
   });
