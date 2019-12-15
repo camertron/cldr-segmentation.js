@@ -44,7 +44,7 @@ If you'd like to iterate over each sentence instead of splitting, use a `BreakIt
 var breakIter = new cldrSegmentation.BreakIterator(supp);
 var str = "I like Mrs. Murphy, she's nice.";
 
-breakIter.eachSentence(str, function(sentence, start, stop) {
+breakIter.eachSentence(str, (sentence, start, stop) => {
   // do something
 });
 ```
@@ -68,7 +68,7 @@ When using a break iterator:
 var breakIter = new cldrSegmentation.BreakIterator(supp);
 var str = "I like Mrs. Murphy, she's nice.";
 
-breakIter.eachWord(str, function(word, start, stop) {
+breakIter.eachWord(str, (word, start, stop) => {
   // do something
 });
 ```
