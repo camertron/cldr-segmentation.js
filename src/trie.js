@@ -16,9 +16,14 @@ class Node {
 class Trie {
   constructor(rootNode) {
     this.root = rootNode || new Node();
+    this.locked = false;
   }
 
   add(key, value) {
+    if (this.locked) {
+      throw 'Cannot add items to a locked trie'
+    }
+
     let current = this.root;
 
     for (let i = 0; i < key.length; i ++) {
@@ -34,5 +39,9 @@ class Trie {
     }
 
     current.value = value;
+  }
+
+  lock() {
+    this.locked = true;
   }
 }

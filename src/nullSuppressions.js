@@ -1,4 +1,4 @@
-class NullSuppressions {
+export class NullSuppressions {
   static instance;
 
   constructor() {

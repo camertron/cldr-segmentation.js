@@ -64,14 +64,18 @@ task :dump_suppressions do
 
     unless suppressions.is_a?(TwitterCldr::Segmentation::NullSuppressions)
       File.open("./src/suppressions/#{locale}.js", 'w+') do |file|
-        file << "Suppressions['#{locale}'] = Suppressions.create([\n"
+        file << "suppressions['#{locale}'] = ( () => {\n  let supp = Suppressions.create([\n"
 
         rows = trie2arr(suppressions.forward_trie.root, '').map do |item|
-          "  '#{item}'"
+          "    '#{item}'"
         end
 
         file << rows.join(",\n")
-        file << "\n]);\n"
+        file << "\n  ]);\n"
+
+        file << "\n  supp.lock();"
+        file << "\n  return supp;"
+        file << "\n})();"
       end
     end
   end

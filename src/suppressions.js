@@ -1,3 +1,5 @@
+export const suppressions = {};
+
 export class Suppressions {
   static create(list) {
     let forwardTrie = new Trie();
@@ -9,12 +11,18 @@ export class Suppressions {
       backwardTrie.add(codePoints.reverse(), true);
     });
 
-    return new Suppressions(forwardTrie, backwardTrie);
+    return new Suppressions(forwardTrie, backwardTrie, list);
   }
 
-  constructor(forwardTrie, backwardTrie) {
+  constructor(forwardTrie, backwardTrie, list) {
     this.forwardTrie = forwardTrie;
     this.backwardTrie = backwardTrie;
+    this.list = list;
+  }
+
+  lock() {
+    this.forwardTrie.lock();
+    this.backwardTrie.lock();
   }
 
   shouldBreak(cursor) {

@@ -7,7 +7,7 @@
   }
 
   let cldrSegmentation = require('cldr-segmentation');
-  let englishSuppressions = cldrSegmentation.Suppressions.en;
+  let englishSuppressions = cldrSegmentation.suppressions.en;
 
   describe('#sentenceSplit', () => {
     it('splits correctly', () => {

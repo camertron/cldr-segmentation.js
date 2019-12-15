@@ -37,7 +37,6 @@ class StateMachine {
   }
 
   handleNext(cursor) {
-    debugger;
     var initialPosition = cursor.actualPosition;
     var result = cursor.actualPosition;
     var state = START_STATE;

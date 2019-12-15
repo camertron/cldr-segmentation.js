@@ -5,12 +5,16 @@
   </head>
   <body>
     <script type='text/javascript'>
-      var breakIter = new cldrSegmentation.BreakIterator(cldrSegmentation.Suppressions.en);
+      var breakIter = new cldrSegmentation.BreakIterator(cldrSegmentation.suppressions.en);
 
-      var sentence = "\u0001\u{1F1E6}";
+      var text = "I like Mrs. Patterson, she's nice.";
 
-      breakIter.eachWord(sentence, function(str, start, stop) {
-        console.log([str, start, stop]);
+      breakIter.eachSentence(text, function(str, start, stop) {
+        console.log("'" + str + "': " + start + ", " + stop);
+      });
+
+      breakIter.eachWord(text, function(str, start, stop) {
+        console.log("'" + str + "': " + start + ", " + stop);
       });
     </script>
   </body>

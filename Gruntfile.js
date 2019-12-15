@@ -1,4 +1,14 @@
 let fs = require('fs');
+let path = require('path');
+
+let prefix = path.join('src', 'suppressions');
+let suppressions = [];
+
+fs.readdirSync(prefix).forEach( (file) => {
+  if (path.basename(file) !== 'all.js') {
+    suppressions.push(path.join(prefix, file));
+  }
+});
 
 module.exports = (grunt) => {
   require('load-grunt-tasks')(grunt);
@@ -25,7 +35,8 @@ module.exports = (grunt) => {
           'src/stateTable.js',
           'src/trie.js',
           'src/suppressions.js',
-          'src/suppressions/*.js'
+          ...suppressions,
+          'src/suppressions/all.js'
         ],
         dest: 'build/cldr-segmentation.js',
       }

@@ -1,6 +1,6 @@
 {
   "name": "cldr-segmentation",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "CLDR text segmentation for JavaScript",
   "main": "dist/cldr-segmentation.js",
   "scripts": {
@@ -24,18 +24,21 @@
     "url": "https://github.com/camertron/cldr-segmentation.js/issues"
   },
   "homepage": "https://github.com/camertron/cldr-segmentation.js",
+  "dependencies": {
+    "cldr-segmentation": "./",
+    "utfstring": "~2.0"
+  },
   "devDependencies": {
-    "load-grunt-tasks": "~3.5",
+    "babel-core": "~6.26",
+    "babel-plugin-transform-class-properties": "~6.0",
+    "babel-plugin-transform-es2015-modules-umd": "~6.0",
+    "babel-preset-es2015": "~6.0",
+    "cldrSegmentation": "./",
     "grunt": "~1.0",
     "grunt-babel": "~7.0",
     "grunt-contrib-concat": "~1.0",
     "grunt-contrib-uglify": "~3.1",
-    "babel-core": "~6.26",
-    "babel-preset-es2015": "~6.0",
-    "babel-plugin-transform-es2015-modules-umd": "~6.0",
-    "babel-plugin-transform-class-properties": "~6.0",
     "jasmine-node": "~1.14",
-    "utfstring": "~2.0",
-    "cldrSegmentation": "./"
+    "load-grunt-tasks": "~3.5"
   }
 }

@@ -5,7 +5,7 @@ Text segmentation library for JavaScript.
 
 ## What is this thing?
 
-This library provides CLDR-based text segmentation capabilities in JavaScript. Text segmentation is the process of identifying word, sentence, and other boundaries in a text. The segmentation rules are published by the Unicode consortium as part of the Common Locale Data Repository, or CLDR, and made freely available.
+This library provides CLDR-based text segmentation capabilities in JavaScript. Text segmentation is the process of identifying word, sentence, and other boundaries in a text. The segmentation rules are published by the Unicode consortium as part of the Common Locale Data Repository, or CLDR, and made freely available to the public.
 
 ## Why not just split on spaces or periods?
 
@@ -30,18 +30,18 @@ cldrSegmentation.sentenceSplit("I like Mrs. Murphy. She's nice.");
 // => ["I like Mrs. ", "Murphy. ", "She's nice."]
 ```
 
-You'll notice that `Mrs.` was treated as the end of a sentence. To avoid this, use the ULI exceptions for the language you care about. ULI exceptions (Unicode Localization Interoperability) are arrays of strings. Each string represents a series of characters after which there should _not_ be a break. Using the English ULI exceptions for the example above yields better results:
+You'll notice that `Mrs.` was treated as the end of a sentence. To avoid this, use the suppressions for the language you care about. Suppressions are essentially arrays of strings. Each string represents a series of characters after which there should _not_ be a break. Using the English suppressions for the example above yields better results:
 
 ```javascript
-var uliExceptions = cldrSegmentation.uliExceptions.en;
-cldrSegmentation.sentenceSplit("I like Mrs. Murphy. She's nice.", uliExceptions);
+var supp = cldrSegmentation.suppressions.en;
+cldrSegmentation.sentenceSplit("I like Mrs. Murphy. She's nice.", supp);
 // => ["I like Mrs. Murphy. ", "She's nice."]
 ```
 
 If you'd like to iterate over each sentence instead of splitting, use a `BreakIterator`:
 
 ```javascript
-var breakIter = new cldrSegmentation.BreakIterator();
+var breakIter = new cldrSegmentation.BreakIterator(supp);
 var str = "I like Mrs. Murphy, she's nice.";
 
 breakIter.eachSentence(str, function(sentence, start, stop) {
@@ -49,22 +49,65 @@ breakIter.eachSentence(str, function(sentence, start, stop) {
 });
 ```
 
-## Word Segmentation
+Suppressions for all languages are available via `cldrSegmentation.suppressions.all`.
 
-Word segmentation works in a very similar way. The only major difference is that word segmentation does not support ULI exceptions.
+## Other Types of Segmentation
+
+Word, line, and grapheme cluster segmentation are supported:
 
 ```javascript
 cldrSegmentation.wordSplit("I like Mrs. Murphy. She's nice.");
 // => ["I", " ", "like", " ", "Mrs",  ".", " ", "Murphy", ".", "She's", " ", "nice", "."]
 ```
 
+Also available are the `lineSplit` and `graphemeSplit` functions.
+
+When using a break iterator:
+
 ```javascript
-var breakIter = new cldrSegmentation.BreakIterator();
+var breakIter = new cldrSegmentation.BreakIterator(supp);
 var str = "I like Mrs. Murphy, she's nice.";
 
 breakIter.eachWord(str, function(word, start, stop) {
   // do something
 });
+```
+
+Also available are the `eachLine` and `eachGraphemeCluster` functions.
+
+## Custom Suppressions
+
+Suppressions are just objects with a single `shouldBreak` function that returns a boolean. The function is passed a cursor object positioned at the index of the proposed break. Cursors deal exclusively with Unicode codepoints, meaning your custom suppression logic will need to be implemented in those terms. For example, let's create a custom suppression function that doesn't allow breaks after sentences that end with the letter 't'.
+
+```javascript
+class TeeSuppression {
+  shouldBreak(cursor) {
+    var position = cursor.logicalPosition;
+
+    // skip backwards past spaces and periods
+    do {
+      let cp = cursor.getCodePoint(position);
+      position --;
+    } while (cp === 32 || cp === 46);
+
+    // we skipped one too many in the loop
+    position ++;
+
+    // if the ending character is 't', return false;
+    // otherwise return true
+    return cursor.getCodePoint(position) !== 116;
+  }
+}
+```
+
+Note that you don't have to use ES6 classes. It's equally valid to create a simple object:
+
+```javascript
+let teeSuppression = {
+  shouldBreak: (cursor) => {
+    // logic here
+  }
+}
 ```
 
 ## Running Tests
