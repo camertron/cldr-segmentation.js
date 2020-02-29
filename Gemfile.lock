@@ -13,7 +13,7 @@ GEM
     pry-byebug (3.5.0)
       byebug (~> 9.1)
       pry (~> 0.10)
-    rake (12.3.0)
+    rake (12.3.3)
     twitter_cldr (5.2.0)
       camertron-eprun
       cldr-plurals-runtime-rb (~> 1.0)
