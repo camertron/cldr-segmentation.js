@@ -1,3 +1,6 @@
+### 2.0.1
+* Fix dependency issue causing problems installing via npm.
+
 ### 2.0.0
 * Massive performance improvements.
   - Switched from regex-based approach to state machine engine borrowed from ICU4J.
