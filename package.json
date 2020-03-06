@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/camertron/cldr-segmentation.js",
   "dependencies": {
-    "cldr-segmentation": "./",
     "utfstring": "~2.0"
   },
   "devDependencies": {
