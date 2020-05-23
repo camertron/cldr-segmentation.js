@@ -1,5 +1,6 @@
 ## 2.0.2
-* Fix
+* Ensure suppressions are preceded by a space, i.e. are whole words.
+  - Fixes bug where "Phillip. Is my name." would contain no breaks because 'pp.' is an English suppression.
 
 ## 2.0.1
 * Fix dependency issue causing problems installing via npm.
