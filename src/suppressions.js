@@ -58,6 +58,10 @@ export class Suppressions {
       idx --;
     }
 
+    if (idx != 0 && cursor.getCodePoint(idx - 1) != 32) {
+      return true;
+    }
+
     if (!found) {
       return true;
     }
