@@ -1,13 +1,13 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define('cldr/segmentation', ['exports', 'utfstring'], factory);
+    define('cldr/segmentation', ['exports', 'UtfString'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('utfstring'));
+    factory(exports, require('UtfString'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.utfstring);
+    factory(mod.exports, global.UtfString);
     global.cldrSegmentation = mod.exports;
   }
 })(this, function (exports, utfstring) {
@@ -656,6 +656,10 @@
           }
 
           idx--;
+        }
+
+        if (idx != 0 && cursor.getCodePoint(idx - 1) != 32) {
+          return true;
         }
 
         if (!found) {
