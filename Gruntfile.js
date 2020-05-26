@@ -52,7 +52,7 @@ module.exports = (grunt) => {
       },
 
       globals: {
-        UtfString: 'UtfString'
+        utfstring: 'utfstring'
       },
 
       main: {

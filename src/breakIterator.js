@@ -1,4 +1,4 @@
-var utfstring = require('UtfString');
+var utfstring = require('utfstring');
 
 export class BreakIterator {
   constructor(suppressions) {

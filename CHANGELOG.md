@@ -1,3 +1,6 @@
+## 2.0.3
+* Somehow the require of 'utfstring' was changed to 'UtfString', which worked on Mac OS's case-insensitive filesystem but errored in Linux environments.
+
 ## 2.0.2
 * Ensure suppressions are preceded by a space, i.e. are whole words.
   - Fixes bug where "Phillip. Is my name." would contain no breaks because 'pp.' is an English suppression.
