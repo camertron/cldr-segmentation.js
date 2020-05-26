@@ -128,6 +128,10 @@ suppressions['en'] = ( () => {
     'a.m.'
   ]);
 
+  if (customSuppressions['en']) {
+    supp = supp.merge(customSuppressions['en']);
+  }
+
   supp.lock();
   return supp;
 })();

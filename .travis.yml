@@ -1,0 +1,12 @@
+language: node_js
+sudo: false
+cache: yarn
+install: true
+before_script:
+  - yarn global add jasmine-node grunt-cli
+  - yarn install
+  - grunt
+node_js:
+  - 12
+  - 13
+  - 14

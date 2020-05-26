@@ -20,6 +20,10 @@ suppressions['ru'] = ( () => {
     'ул.'
   ]);
 
+  if (customSuppressions['ru']) {
+    supp = supp.merge(customSuppressions['ru']);
+  }
+
   supp.lock();
   return supp;
 })();

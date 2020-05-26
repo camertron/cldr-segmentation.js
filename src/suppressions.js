@@ -25,6 +25,14 @@ export class Suppressions {
     this.backwardTrie.lock();
   }
 
+  merge(otherSupp) {
+    return new Suppressions(
+      this.forwardTrie.merge(otherSupp.forwardTrie),
+      this.backwardTrie.merge(otherSupp.backwardTrie),
+      [...this.list, ...otherSupp.list]
+    )
+  }
+
   shouldBreak(cursor) {
     var idx = cursor.logicalPosition;
 

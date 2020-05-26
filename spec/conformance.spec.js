@@ -7,7 +7,7 @@
   }
 
   let cldrSegmentation = require('cldr-segmentation');
-  let utfstring = require('UtfString');
+  let utfstring = require('utfstring');
   let fs = require('fs');
 
   let parse = (testData) => {

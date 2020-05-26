@@ -171,6 +171,10 @@ suppressions['pt'] = ( () => {
     'Jr.'
   ]);
 
+  if (customSuppressions['pt']) {
+    supp = supp.merge(customSuppressions['pt']);
+  }
+
   supp.lock();
   return supp;
 })();

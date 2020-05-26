@@ -73,6 +73,10 @@ task :dump_suppressions do
         file << rows.join(",\n")
         file << "\n  ]);\n"
 
+        file << "\n  if (customSuppressions['#{locale}']) {"
+        file << "\n    supp = supp.merge(customSuppressions['#{locale}']);"
+        file << "\n  }\n"
+
         file << "\n  supp.lock();"
         file << "\n  return supp;"
         file << "\n})();"

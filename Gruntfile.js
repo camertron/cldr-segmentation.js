@@ -35,6 +35,7 @@ module.exports = (grunt) => {
           'src/stateTable.js',
           'src/trie.js',
           'src/suppressions.js',
+          'src/customSuppressions.js',
           ...suppressions,
           'src/suppressions/all.js'
         ],
@@ -52,7 +53,7 @@ module.exports = (grunt) => {
       },
 
       globals: {
-        UtfString: 'UtfString'
+        utfstring: 'utfstring'
       },
 
       main: {
