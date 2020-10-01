@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/camertron/cldr-segmentation.js.svg?branch=master)](https://travis-ci.org/camertron/cldr-segmentation.js)
+
 cldr-segmentation
 ===
 
