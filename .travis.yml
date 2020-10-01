@@ -3,6 +3,7 @@ sudo: false
 cache: yarn
 before_script:
   - yarn global add jasmine-node grunt-cli
+  - grunt
 script: jasmine-node --verbose spec/
 node_js:
   - 12
