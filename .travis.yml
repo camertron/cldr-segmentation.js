@@ -2,7 +2,7 @@ language: node_js
 sudo: false
 cache: npm
 before_script:
-  - npm install -g grunt
+  - npm install -g grunt-cli grunt
   - npm install
   - grunt
 script: jasmine-node --verbose spec/
