@@ -83,8 +83,8 @@
         });
       });
 
-      describe('without ULI exceptions', () => {
-        it('splits on certain abbreviations like Mr. and Mrs. (use ULI rules to avoid this behavior)', () => {
+      describe('without suppressions', () => {
+        it('splits on certain abbreviations like Mr. and Mrs. (use suppressions to avoid this behavior)', () => {
           let str = "I really like Mrs. Patterson. She's nice.";
 
           expect(collectSubstrings(iterator, 'eachSentence', str)).toEqual([

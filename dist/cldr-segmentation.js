@@ -17,6 +17,18 @@
     value: true
   });
 
+  function _toConsumableArray(arr) {
+    if (Array.isArray(arr)) {
+      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+        arr2[i] = arr[i];
+      }
+
+      return arr2;
+    } else {
+      return Array.from(arr);
+    }
+  }
+
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -544,6 +556,33 @@
       value: function getChild(key) {
         return this.children[key];
       }
+    }, {
+      key: 'copy',
+      value: function copy() {
+        var childrenCopy = {};
+
+        for (var key in this.children) {
+          childrenCopy[key] = this.children[key].copy();
+        }
+
+        return new Node(this.value, childrenCopy);
+      }
+    }, {
+      key: 'forEach',
+      value: function forEach(callback) {
+        this._forEach(callback, []);
+      }
+    }, {
+      key: '_forEach',
+      value: function _forEach(callback, path) {
+        if (this.value) {
+          callback(path, this.value);
+        }
+
+        for (var key in this.children) {
+          this.children[key]._forEach(callback, [].concat(_toConsumableArray(path), [key]));
+        }
+      }
     }]);
 
     return Node;
@@ -585,6 +624,27 @@
       value: function lock() {
         this.locked = true;
       }
+    }, {
+      key: 'copy',
+      value: function copy() {
+        return new Trie(this.root.copy());
+      }
+    }, {
+      key: 'forEach',
+      value: function forEach(callback) {
+        this.root.forEach(callback);
+      }
+    }, {
+      key: 'merge',
+      value: function merge(otherTrie) {
+        var result = this.copy();
+
+        otherTrie.forEach(function (key, value) {
+          result.add(key, value);
+        });
+
+        return result;
+      }
     }]);
 
     return Trie;
@@ -622,6 +682,11 @@
       value: function lock() {
         this.forwardTrie.lock();
         this.backwardTrie.lock();
+      }
+    }, {
+      key: 'merge',
+      value: function merge(otherSupp) {
+        return new Suppressions(this.forwardTrie.merge(otherSupp.forwardTrie), this.backwardTrie.merge(otherSupp.backwardTrie), [].concat(_toConsumableArray(this.list), _toConsumableArray(otherSupp.list)));
       }
     }, {
       key: 'shouldBreak',
@@ -691,38 +756,69 @@
     return Suppressions;
   }();
 
+  ;var customSuppressions = exports.customSuppressions = {
+    en: Suppressions.create(['Dr.'])
+  };
   ;suppressions['de'] = function () {
     var supp = Suppressions.create(['Port.', 'Prot.', 'Proz.', 'Pfd.', 'P.', 'Phys.', 'PIN.', 'Alt.', 'Allg.', 'Ausg.', 'Ausschl.', 'Aug.', 'Akt.', 'Abs.', 'Abt.', 'Abw.', 'A.', 'Adr.', 'Adj.', 'App.', 'Apr.', 'Art.', 'Di.', 'Dipl.-Ing.', 'Dipl.-Kfm.', 'Dir.', 'Dim.', 'Dez.', 'D.', 'Dr.', 'Dtzd.', 'Dat.', 'Do.', 'Ges.', 'Gesch.', 'Gebr.', 'Gem.', 'Geograph.', 'G.', 'Ggf.', 'frz.', 'entspr.', 'erw.', 'evtl.', 'ev.', 'eigtl.', 'einschl.', 'e.h.', 'e.Wz.', 'e.V.', 'exkl.', 'ehem.', 'Frl.', 'Fr.', 'Folg.', 'Forts. f.', 'Fa.', 'Fam.', 'Fn.', 'Feb.', 'F.', 'Inh.', 'Ing.', 'Int.', 'Inc.', 'I.', 'k.u.k.', 'k. u. k.', 'kgl.', 'kath.', 'kfm.', 'Ca.', 'Chr.', 'Chin.', 'C.', 'Co.', 'J.', 'Jahrh.', 'Jan.', 'Jr.', 'So.', 'Sept.', 'Sep.', 'Sek.', 'Sa.', 'Spezif.', 'St.', 'Std.', 'Str.', 'StR.', 'S.A.', 'Schr.', 'i.B.', 'i.R.', 'i.J.', 'i.A.', 'i.H.', 'i.V.', 'inkl.', 's.', 'schwäb.', 'schweiz.', 'schles.', 'sog.', 'südd.', 'o.B.', 'o.A.', 'o.g.', 'od.', 'am.', 'amtl.', 'a.a.O.', 'a.a.S.', 'a.Rh.', 'a.M.', 'a.D.', 'u.', 'z.', 'zzgl.', 'Kl.', 'Kap.', 'Kfm.', 'Konv.', 'Kop.', 'Obj.', 'Op.', 'O.', 'Okt.', 'Msp.', 'Mo.', 'Mod.', 'Mrd.', 'M.', 'Max.', 'Mind.', 'Min.', 'Mi.', 'Mio.', 'U.', 'Urspr.', 'Ursprüngl.', 'R.', 'Rd.', 'Rel.', 'Reg.', 'Rep.', 'Einh.', 'Erf.', 'Evtl.', 'Vgl.', 'Verf.', 'W.', 'Wg.', 'B.', 'Bibl.', 'Bed.', 'Best.', 'Ben.', 'Ber.', 'n.u.Z.', 'n. Chr.', 'näml.', 'Hr.', 'Hrn.', 'Hrsg.', 'Hbf.', 'Hptst.', 'Ztr.', 'Z.', 'd.Ä.', 'd.J.', 'b.', 'beil.', 'v.R.w.', 'v.T.', 'v. Chr.', 'v. u. Z.', 'v. H.', 'v.u.Z.', 'v.Chr.', 'v.H.', 'verh.', 'verw.', 'vgl.', 'möbl.', 'm.W.', 'm.E.', 'mtl.', 'tägl.', 'gest.', 'gesch.', 'gek.', 'gedr.', 'geb.', 'ggf.', 'ggfs.', 'Nov.', 'N.', 'Nr.', 'p.Adr.', 'r.', 'röm.', 'jew.', 'jhrl.', 'Qu.', 'hpts.', 'Ltd.', 'L.', 'led.', 'Test.', 'Temp.', 'Tel.', 'Tägl.', 'Trans.', 'T.', 'Y.', 'österr.']);
+
+    if (customSuppressions['de']) {
+      supp = supp.merge(customSuppressions['de']);
+    }
 
     supp.lock();
     return supp;
   }();;suppressions['en'] = function () {
     var supp = Suppressions.create(['L.', 'Long.', 'Link.', 'Lib.', 'Lt.', 'Lev.', 'Alt.', 'All.', 'Approx.', 'Act.', 'Aug.', 'Abs.', 'A.', 'Adj.', 'Adv.', 'AD.', 'AB.', 'AA.', 'As.', 'E.', 'Ex.', 'Exec.', 'Est.', 'Ed.', 'Etc.', 'O.', 'Ok.', 'Org.', 'Or.', 'OK.', 'Op.', 'On.', 'Maj.', 'Mart.', 'Mar.', 'Misc.', 'Min.', 'MR.', 'M.', 'Mrs.', 'Mr.', 'Md.', 'Mt.', 'Mgr.', 'Ms.', 'Mb.', 'P.O.', 'P.M.', 'P.V.', 'Prof.', 'Pro.', 'Ph.D.', 'Phys.', 'PC.', 'Pvt.', 'PP.', 'J.D.', 'J.K.', 'J.B.', 'Jam.', 'Jan.', 'Job.', 'Joe.', 'Jun.', 'Card.', 'Cap.', 'Capt.', 'Cont.', 'Conn.', 'Col.', 'Comm.', 'C.O.D.', 'C.F.', 'Dec.', 'Def.', 'Dept.', 'DC.', 'D.', 'Do.', 'Diff.', 'Sept.', 'Sep.', 'S.', 'Sgt.', 'Sq.', 'Hat.', 'Hz.', 'Hon.B.A.', 'G.', 'Gb.', 'Go.', 'By.', 'B.', 'Var.', 'VS.', 'N.V.', 'N.Y.', 'Num.', 'Nov.', 'Nr.', 'Up.', 'U.', 'Fn.', 'Feb.', 'Fri.', 'F.', 'Z.', 'Kb.', 'K.', 'I.', 'In.', 'Id.', 'Is.', 'exec.', 'X.', 'vs.', 'R.L.', 'R.T.', 'Rev.', 'Rep.', 'Yr.', 'pp.', 'To.', 'T.', 'Q.', 'a.m.']);
 
+    if (customSuppressions['en']) {
+      supp = supp.merge(customSuppressions['en']);
+    }
+
     supp.lock();
     return supp;
   }();;suppressions['es'] = function () {
     var supp = Suppressions.create(['Rdos.', 'Rdo.', 'RR.HH.', 'Rvdos.', 'Rvdo.', 'Rvdmos.', 'Rvdmo.', 'RAM.', 'Rol.', 'R.D.', 'R.U.', 'Rev.', 'Reg.', 'JJ.OO.', 'Sres.', 'Srtas.', 'Srta.', 'Sra.', 'Sras.', 'Sr.', 'SA.', 'SS.MM.', 'SS.AA.', 'Sol.', 'Seg.', 'Sta.', 'Sto.', 'Sdad.', 'fig.', 'figs.', 'feb.', 'fund.', 'may.', 'mar.', 'mié.', 'mss.', 'ms.', 'mtro.', 'oct.', 'cap.', 'col.', 'cf.', 'cfr.', 'c/c.', 'doc.', 'dom.', 'dic.', 'dtor.', 'dptos.', 'dpto.', 'depto.', 'deptos.', 'd. C.', 'Excmo.', 'Excmos.', 'Excma.', 'Excmas.', 'Exc.', 'Exmo.', 'Exmos.', 'Exma.', 'Exmas.', 'Emm.', 'Em.', 'Trab.', 'Kit.', 'Korn.', 'K.', 'Inc.', 'Ilmas.', 'Ilma.', 'Ilmos.', 'Ilmo.', 'Id.', 'FF.CC.', 'Fabric.', 'Fr.', 'DC.', 'Da.', 'Dr.', 'Drs.', 'Dra.', 'Desv.', 'Desc.', 'D.', 'Dña.', 'Dª.', 'Dto.', 'ago.', 'abr.', 'a. C.', 'a. e. c.', 'afma.', 'afmas.', 'afmo.', 'afmos.', 'trad.', 'ed.', 'ene.', 'ej.', 'e. c.', 'e.g.', 'jul.', 'jue.', 'jun.', 'Comm.', 'Col.', 'Corp.', 'C.', 'Cía.', 'CA.', 'vid.', 'vie.', 'v.gr.', 'vs.', 'ss.', 'sáb.', 'sras.', 'sres.', 'srs.', 'sept.', 'ntra.', 'ntro.', 'nov.', 'prov.', 'prof.', 'p.ej.', 'licdo.', 'licda.', 'lun.', 'bol.', 'bco.', 'Vda.', 'Var.', 'O.M.', 'Ldo.', 'Lda.', 'Ltda.', 'Ltd.', 'Ltdo.', 'Lcda.', 'Lcdo.', 'Lic.', 'L.', 'U.S.', 'hnos.', 'MM.', 'Mons.', 'M.', 'Mr.', 'Mrs.', 'A.C.', 'Av.', 'Avda.', 'Ant.', 'All.', 'AA.', 'H.P.', 'PP.', 'Bien.']);
+
+    if (customSuppressions['es']) {
+      supp = supp.merge(customSuppressions['es']);
+    }
 
     supp.lock();
     return supp;
   }();;suppressions['fr'] = function () {
     var supp = Suppressions.create(['aux.', 'adr.', 'anc.', 'anon.', 'ann.', 'acoust.', 'avr.', 'av. J.-C.', 'append.', 'ap. J.-C.', 'config.', 'collab.', 'coll.', 'cam.', 'categ.', 'M.', 'MM.', 'Mart.', 'dim.', 'dir.', 'dict.', 'doc.', 'dest.', 'déc.', 'imprim.', 'imm.', 'indus.', 'illustr.', 'ill.', 'oct.', 'syst.', 'symb.', 'synth.', 'sept.', 'sam.', 'bull.', 'broch.', 'P.', 'Prof.', 'hôp.', 'juil.', 'jeu.', 'janv.', 'C.', 'Comm.', 'voit.', 'ven.', 'Jr.', 'graph.', 'gouv.', 'éd.', 'édit.', 'éval.', 'équiv.', 'fig.', 'févr.', 'niv.', 'nov.', 'quart.', 'réf.', 'DC.', 'Desc.', 'D.', 'L.', 'All.', 'U.', 'S.M.A.R.T.', 'S.A.', 'encycl.', 'exempl.', 'mer.', 'mar.', 'lun.', 'Inc.', 'Var.', 'W.', 'Op.', 'trav. publ.']);
 
+    if (customSuppressions['fr']) {
+      supp = supp.merge(customSuppressions['fr']);
+    }
+
     supp.lock();
     return supp;
   }();;suppressions['it'] = function () {
     var supp = Suppressions.create(['N.B.', 'N.d.A.', 'N.d.T.', 'N.d.E.', 'div.', 'd.p.R.', 'd.C.', 'dott.', 'dr.', 'a.C.', 'arch.', 'ag.', 'avv.', 'all.', 'fig.', 'c.c.p.', 'Cfr.', 'C.P.', 'vol.', 'ver.', 'Geom.', 'O.d.G.', 'S.p.A.', 'S.M.A.R.T.', 'S.A.R.', 'Sig.', 'rag.', 'Mod.', 'pag.', 'p.', 'tav.', 'tab.', 'DC.', 'D.', 'mitt.', 'Ing.', 'int.', 'on.', 'L.', 'Ltd.', 'Liv.', 'U.S.', 'sez.']);
+
+    if (customSuppressions['it']) {
+      supp = supp.merge(customSuppressions['it']);
+    }
 
     supp.lock();
     return supp;
   }();;suppressions['pt'] = function () {
     var supp = Suppressions.create(['psicol.', 'port.', 'pol.', 'p.', 'pág.', 'pal.', 'profa.', 'prof.', 'pron.', 'prod.', 'próx.', 'pq.', 'pp.', 'fig.', 'fisiol.', 'filos.', 'fil.', 'ff.', 'fev.', 'fem.', 'fot.', 'fís.', 'fasc.', 'fac.', 'fl.', 'fr.', 'f.', 'compl.', 'comp.', 'com.', 'col.', 'cont.', 'contab.', 'cap.', 'caps.', 'cat.', 'cf.', 'créd.', 'cel.', 'cx.', 'círc.', 'cód.', 'rep.', 'res.', 'relat.', 'rel.', 'ref.', 'rementente', 'r.s.v.p.', 'rod.', 'doc.', 'dipl.', 'dir.', 'div.', 'dez.', 'des.', 'desc.', 'déb.', 'd.C.', 'astron.', 'ago.', 'agric.', 'arquit.', 'arqueol.', 'arit.', 'apt.', 'ap.', 'apart.', 'abr.', 'abrev.', 'adm.', 'anat.', 'aux.', 'autom.', 'aer.', 'a.C.', 'a.m.', 'eletrôn.', 'eletr.', 'elem.', 'ed.', 'educ.', 'end.', 'eng.', 'esp.', 'ex.', 'geom.', 'gên.', 'gram.', 'mov.', 'matem.', 'mat.', 'mai.', 'mar.', 'méd.', 'mús.', 'máq.', 'trad.', 'transp.', 'tecnol.', 'tec.', 'tel.', 'Exmo.', 'Exma.', 'E.', 'Est.', 'univ.', 'R.', 'D.C', 'Dir.', 'Drs.', 'Dra.', 'Dras.', 'Dr.', 'l.', 'liter.', 'lit.', 'lin.', 'lat.', 'long.', 'P.M.', 'Pe.', 'Ph.D.', 'jur.', 'jul.', 'jun.', 'jan.', 'neol.', 'nov.', 'náut.', 'índ.', 'Ltda.', 'Ltd.', 'ingl.', 'ind.', 'Mar.', 'símb.', 'sup.', 'séc.', 'set.', 'sociol.', 'V.T.', 'vs.', 'vol.', 'S.', 'Sta.', 'Sto.', 'N.Sra.', 'N.T.', 'out.', 'odontol.', 'odont.', 'org.', 'organiz.', 'obs.', 'A.C.', 'A.M', 'Av.', 'Alm.', 'álg.', 'hist.', 'Fr.', 'Ilmo.', 'Ilma.', 'quím.', 'W.C.', 'bras.', 'biogr.', 'Jr.']);
 
+    if (customSuppressions['pt']) {
+      supp = supp.merge(customSuppressions['pt']);
+    }
+
     supp.lock();
     return supp;
   }();;suppressions['ru'] = function () {
     var supp = Suppressions.create(['руб.', 'янв.', 'до н. э.', 'дек.', 'сент.', 'тел.', 'тыс.', 'февр.', 'нояб.', 'н. э.', 'н.э.', 'апр.', 'авг.', 'окт.', 'отд.', 'проф.', 'кв.', 'ул.']);
+
+    if (customSuppressions['ru']) {
+      supp = supp.merge(customSuppressions['ru']);
+    }
 
     supp.lock();
     return supp;

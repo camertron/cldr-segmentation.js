@@ -77,7 +77,17 @@ Also available are the `eachLine` and `eachGraphemeCluster` functions.
 
 ## Custom Suppressions
 
-Suppressions are just objects with a single `shouldBreak` function that returns a boolean. The function is passed a cursor object positioned at the index of the proposed break. Cursors deal exclusively with Unicode codepoints, meaning your custom suppression logic will need to be implemented in those terms. For example, let's create a custom suppression function that doesn't allow breaks after sentences that end with the letter 't'.
+Suppressions are just strings after which a break should not occur. This library comes with a set of common suppressions for a variety of languages, but you may want to add your own. Suppression objects can be merged. For example, here's how to add "Dr." to the set of English suppressions:
+
+```javascript
+var customSupps = cldrSegmentation.Suppressions.create(['Dr.']);
+var supps = cldrSegmentation.suppressions.en.merge(customSupps);
+cldrSegmentation.sentenceSplit("We love Dr. Strange. He's cool.", supps);
+```
+
+## Custom Suppression Objects
+
+Suppression objects are just plain 'ol Javascript objects with a single `shouldBreak` function that returns a boolean. The function is passed a cursor object positioned at the index of the proposed break. Cursors deal exclusively with Unicode codepoints, meaning your custom suppression logic will need to be implemented in those terms. For example, let's create a custom suppression function that doesn't allow breaks after sentences that end with the letter 't'.
 
 ```javascript
 class TeeSuppression {

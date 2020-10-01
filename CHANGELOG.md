@@ -1,3 +1,8 @@
+## 2.1.0
+* Add ability to copy and merge suppression objects.
+  - Enables adding custom suppression strings.
+* Add custom English suppression for "Dr.".
+
 ## 2.0.3
 * Somehow the require of 'utfstring' was changed to 'UtfString', which worked on Mac OS's case-insensitive filesystem but errored in Linux environments.
 

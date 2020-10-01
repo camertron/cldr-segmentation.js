@@ -80,6 +80,10 @@ suppressions['fr'] = ( () => {
     'trav. publ.'
   ]);
 
+  if (customSuppressions['fr']) {
+    supp = supp.merge(customSuppressions['fr']);
+  }
+
   supp.lock();
   return supp;
 })();

@@ -11,6 +11,30 @@ class Node {
   getChild(key) {
     return this.children[key];
   }
+
+  copy() {
+    let childrenCopy = {};
+
+    for (const key in this.children) {
+      childrenCopy[key] = this.children[key].copy();
+    }
+
+    return new Node(this.value, childrenCopy);
+  }
+
+  forEach(callback) {
+    this._forEach(callback, []);
+  }
+
+  _forEach(callback, path) {
+    if (this.value) {
+      callback(path, this.value);
+    }
+
+    for (const key in this.children) {
+      this.children[key]._forEach(callback, [...path, key]);
+    }
+  }
 }
 
 class Trie {
@@ -43,5 +67,23 @@ class Trie {
 
   lock() {
     this.locked = true;
+  }
+
+  copy() {
+    return new Trie(this.root.copy());
+  }
+
+  forEach(callback) {
+    this.root.forEach(callback);
+  }
+
+  merge(otherTrie) {
+    let result = this.copy();
+
+    otherTrie.forEach((key, value) => {
+      result.add(key, value);
+    });
+
+    return result;
   }
 }

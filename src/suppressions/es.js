@@ -162,6 +162,10 @@ suppressions['es'] = ( () => {
     'Bien.'
   ]);
 
+  if (customSuppressions['es']) {
+    supp = supp.merge(customSuppressions['es']);
+  }
+
   supp.lock();
   return supp;
 })();

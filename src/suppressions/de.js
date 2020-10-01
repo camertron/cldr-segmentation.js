@@ -219,6 +219,10 @@ suppressions['de'] = ( () => {
     'österr.'
   ]);
 
+  if (customSuppressions['de']) {
+    supp = supp.merge(customSuppressions['de']);
+  }
+
   supp.lock();
   return supp;
 })();

@@ -45,6 +45,10 @@ suppressions['it'] = ( () => {
     'sez.'
   ]);
 
+  if (customSuppressions['it']) {
+    supp = supp.merge(customSuppressions['it']);
+  }
+
   supp.lock();
   return supp;
 })();
