@@ -2,7 +2,7 @@ language: node_js
 sudo: false
 cache: yarn
 before_script:
-  - yarn install -g jasmine-node grunt-cli
+  - yarn global add jasmine-node grunt-cli
 script: jasmine-node --verbose spec/
 node_js:
   - 12
