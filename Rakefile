@@ -17,22 +17,22 @@ task :dump_rule_sets do
       file << "RuleSet.#{boundary_type} = {"
       file << "\n  forwardTable: {"
       file << "\n    flags: #{state_machine.ftable.flags},"
-      file << "\n    table: [\n"
+      file << "\n    table: JSON.parse(`[\n"
 
       rows = state_machine.ftable.values.each_slice(20).map do |values|
         "      #{values.join(', ')}"
       end
 
       file << rows.join(",\n")
-      file << "\n    ]\n  },"
-      file << "\n\n  categoryTable: [\n"
+      file << "\n    ]`)\n  },"
+      file << "\n\n  categoryTable: JSON.parse(`[\n"
 
       rows = state_machine.category_table.values.each_slice(4).map do |values|
         "    #{values.map(&:inspect).join(', ')}"
       end
 
       file << rows.join(",\n")
-      file << "\n  ],"
+      file << "\n  ]`),"
       file << "\n\n  metadata: {\n"
 
       rows = state_machine.metadata.values.map do |key, val|

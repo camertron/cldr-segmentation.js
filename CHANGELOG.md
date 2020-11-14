@@ -1,3 +1,8 @@
+## 2.1.1
+* Write state tables out as JSON strings instead of raw arrays.
+  - Fixes a bug that causes Node to crash with "FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory."
+* Add documentation around importing (`require` vs `import`).
+
 ## 2.1.0
 * Add ability to copy and merge suppression objects.
   - Enables adding custom suppression strings.
