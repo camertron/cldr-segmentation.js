@@ -7,6 +7,6 @@ before_script:
   - yarn install
   - grunt
 node_js:
-  - 12
   - 13
   - 14
+  - 15
