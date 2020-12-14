@@ -53,6 +53,10 @@
     };
   }();
 
+  if (typeof window !== 'undefined' && window !== null) {
+    utfstring = window.UtfString;
+  }
+
   var BreakIterator = exports.BreakIterator = function () {
     function BreakIterator(suppressions) {
       _classCallCheck(this, BreakIterator);

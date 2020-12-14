@@ -1,5 +1,9 @@
 var utfstring = require('utfstring');
 
+if (typeof window !== 'undefined' && window !== null) {
+  utfstring = window.UtfString;
+}
+
 export class BreakIterator {
   constructor(suppressions) {
     this.suppressions = suppressions;

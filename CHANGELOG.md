@@ -1,3 +1,7 @@
+## 2.1.2
+* Fix browser functionality.
+  - Needed to pull `UtfString` off `window` since `require('utfstring')` is lowercased and therefore doesn't work in the browser.
+
 ## 2.1.1
 * Write state tables out as JSON strings instead of raw arrays.
   - Fixes a bug that causes Node to crash with "FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory."
