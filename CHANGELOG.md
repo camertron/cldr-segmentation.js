@@ -1,3 +1,6 @@
+## 2.1.3
+* Fix issue causing `window.UtfString` to be assigned to `utfstring`  even if `utfstring` wasn't `null`.
+
 ## 2.1.2
 * Fix browser functionality.
   - Needed to pull `UtfString` off `window` since `require('utfstring')` is lowercased and therefore doesn't work in the browser.
