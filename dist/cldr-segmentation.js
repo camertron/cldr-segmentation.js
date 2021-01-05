@@ -53,7 +53,7 @@
     };
   }();
 
-  if (typeof window !== 'undefined' && window !== null) {
+  if (utfstring == null && typeof window !== 'undefined' && window !== null) {
     utfstring = window.UtfString;
   }
 
