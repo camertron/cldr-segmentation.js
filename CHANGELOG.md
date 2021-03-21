@@ -1,3 +1,6 @@
+## 2.2.0
+* Add Turkish suppressions (#17, @ozdemirburak)
+
 ## 2.1.3
 * Fix issue causing `window.UtfString` to be assigned to `utfstring`  even if `utfstring` wasn't `null`.
 
